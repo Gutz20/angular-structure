@@ -1,0 +1,36 @@
+<div class="contenedor-formulario contenedor">
+    <img src="./assets/img/ico/logeo1.png">
+    <form class="formulario" [formGroup]="form" (ngSubmit)="formSubmit()">
+        <div class="texto-title">
+            <ul class="login-reg-txt">
+              <li><a routerLink="/principal/login" class="active">Iniciar sesión</a></li>
+              <li><a routerLink="/principal/registro" class="des">Crear cuenta</a></li>
+            </ul>
+            <div class="login-reg-line">
+              <hr class="cla active">
+              <hr class="cla des">
+            </div>
+        </div>
+        <div class="texto-formulario">
+            <h2>Bienvenido</h2>
+        </div>
+        <div class="input mb-4">
+            <mat-form-field class="full-width" appearance="fill">
+              <mat-label>Nombre de usuario</mat-label>
+              <input matInput placeholder="Digite su nombre de usuario" autocomplete="off" formControlName="username">
+              <mat-hint>El nombre ingresado debe ser valido</mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="input mb-4">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Contraseña</mat-label>
+                <input matInput type="password" autocomplete="off" placeholder="Digite su contraseña" formControlName="password">
+                <mat-hint>La contraseña debe ser valida</mat-hint>
+              </mat-form-field>
+        </div>
+        <div class="input d-flex">
+            <button mat-raised-button class="full-width me-5" color="primary" [disabled]="form.invalid">Iniciar Sesion</button>
+            <button type="reset" class="full-width" mat-raised-button color="accent">Limpiar</button>
+        </div>
+    </form>
+</div>

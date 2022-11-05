@@ -1,0 +1,118 @@
+<div class="container-fluid">
+  <mat-toolbar>
+    <span>{{ operacion }} Producto</span>
+    <div class="example-spacer"></div>
+  </mat-toolbar>
+
+  <mat-card class="card" style="margin-top: 10px">
+    <mat-card-subtitle> Datos del Producto </mat-card-subtitle>
+    <form [formGroup]="form" (ngSubmit)="agregarEditarProducto()">
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field class="ancho">
+            <mat-label>Nombre</mat-label>
+            <input matInput autocomplete="off" formControlName="nombre" />
+          </mat-form-field>
+          <mat-form-field class="ancho">
+            <mat-label>Descripcion</mat-label>
+            <input matInput autocomplete="off" formControlName="descripcion" />
+          </mat-form-field>
+          <mat-form-field class="ancho">
+            <mat-label>Precio</mat-label>
+            <input matInput autocomplete="off" formControlName="precio" />
+          </mat-form-field>
+          <mat-form-field class="ancho">
+            <mat-label>Cantidad</mat-label>
+            <input matInput autocomplete="off" formControlName="cantidad" />
+          </mat-form-field>
+          <mat-form-field class="ancho">
+            <mat-label>Categoria</mat-label> 
+            <mat-select formControlName="categoria">
+              <mat-option
+                *ngFor="let categoria of listaCategorias; let i = index"
+                [value]="categoria"
+              >
+                {{ categoria.nombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <div>
+
+            <div class="dropzone"
+            appDrag
+            (files) = "fileDropped($event)"
+            >
+              <div class="text-wrapper">
+                <div class="centered">
+                  Arrastre y suelte o  
+                  <a (click)="selectFile.click()" class="browse-button">busque</a>
+                  un archivo
+                </div>
+              </div>
+            </div>
+
+            <input
+              type="file"
+              multiple
+              style="display: none;"
+              value="select"
+              #selectFile
+              (change)="onFileSelected($event)"
+            />
+          </div>
+          <div class="mt-5">
+            <div class="row">
+              <mat-grid-list cols="4" rowHeight="1:1">
+                <mat-grid-tile
+                  *ngFor="let file of producto.imagenes; let i = index"
+                >
+                  <div style="position: relative">
+                    <button
+                      type="button"
+                      mat-mini-fab
+                      class="btn-remove-image"
+                      color="warn"
+                      (click)="removerImagen(i)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    <img [src]="file.url" width="100px" height="100px" alt="" />
+                  </div>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <button
+            mat-raised-button
+            style="margin-right: 20px"
+            routerLink="/dashboard/productos"
+          >
+            Volver
+          </button>
+          <button
+            type="submit"
+            *ngIf="isNewProduct"
+            [disabled]="form.invalid"
+            mat-raised-button
+            color="primary"
+          >
+            Agregar Producto
+          </button>
+          <button
+            type="submit"
+            *ngIf="!isNewProduct"
+            [disabled]="form.invalid"
+            mat-raised-button
+            color="primary"
+          >
+            Modificar Producto
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+</div>

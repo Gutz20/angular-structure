@@ -1,0 +1,11 @@
+<div *ngIf="categoria != null" class="container-fluid" style="margin-top: 50px;">
+    <mat-card class="card">
+        <mat-card-title>{{ categoria.nombre }}</mat-card-title>
+        <mat-card-content>
+            <p><strong>Nombre:</strong> {{categoria.nombre}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button routerLink="/dashboard/categorias" mat-raised-button>Volver</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

@@ -1,0 +1,52 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    
+    <mat-toolbar>
+      <img src="./assets/img/ico/logo.jpg" style="border-radius: 50%; margin-right: 10px;" width="50px"/> Zzootec
+    </mat-toolbar>
+    <mat-nav-list>
+      <app-sidebar></app-sidebar>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Panel de administrador</span>
+      <span class="example-spacer"></span>
+      <span class="example-spacer"></span>
+      <button
+        *ngIf="isLoggedIn"
+        (click)="logout()"
+        mat-icon-button
+        class="example-icon favorite-icon"
+        aria-label="Example icon-button with heart icon"
+      >
+        <mat-icon>logout</mat-icon>
+      </button>
+
+      <button
+        *ngIf="isLoggedIn && user"
+        mat-raised-button
+        routerLink="/dashboard/profile"
+      >
+        {{ login.getUser().username }}
+      </button>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

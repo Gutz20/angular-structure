@@ -1,0 +1,60 @@
+<div class="contenedor-formulario contenedor">
+  <img src="./assets/img/ico/register.png" />
+  <form class="formulario" [formGroup]="form" (ngSubmit)="formSubmit()">
+    <div class="texto-title">
+      <ul class="login-reg-txt">
+        <li><a routerLink="/principal/login" class="des">Iniciar sesión</a></li>
+        <li><a routerLink="/principal/registro" class="active">Crear cuenta</a></li>
+      </ul>
+      <div class="login-reg-line">
+        <hr class="cla des" />
+        <hr class="cla active" />
+      </div>
+    </div>
+    <div>
+      <div class="texto-formulario">
+        <h2>Regístrate</h2>
+      </div>
+      <div class="input flo">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Nombre de usuario</mat-label>
+          <input matInput placeholder="Digite su nombre" autocomplete="off" formControlName="username">
+        </mat-form-field>
+      </div>
+      <div class="input">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" placeholder="Digite su contraseña" autocomplete="off" formControlName="password">
+        </mat-form-field>
+      </div>
+      <div class="input flo">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Nombres</mat-label>
+          <input matInput placeholder="Digite su nombre" autocomplete="off" formControlName="nombre">
+        </mat-form-field>
+      </div>
+      <div class="input">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Apellidos</mat-label>
+          <input matInput placeholder="Digite su apellido" autocomplete="off" formControlName="apellido">
+        </mat-form-field>
+      </div>
+      <div class="input flo">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Ex. gonzales@mail.com" autocomplete="off" formControlName="email">
+        </mat-form-field>
+      </div>
+      <div class="input">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Telefono</mat-label>
+          <input matInput placeholder="Digite su telefono" autocomplete="off" formControlName="telefono">
+        </mat-form-field>
+      </div>
+      <div class="input but">
+        <button type="submit" [disabled]="form.invalid" class="full-width me-5" mat-raised-button color="primary">Registrarse</button>
+        <button type="reset" class="full-width" mat-raised-button color="accent">Limpiar</button>
+      </div>
+    </div>
+  </form>
+</div>

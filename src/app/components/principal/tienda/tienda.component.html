@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row my-5">
+    <div class="col-xl-2 mt-2">
+      <mat-accordion>
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title> Categorias </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let categoria of this.categorias">
+            <p
+              (click)="findProductsByCategoria(categoria.categoriaId)"
+              style="cursor: pointer"
+            >
+              {{ categoria.nombre }}
+            </p>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <div class="col-xl-10 mt-2">
+      <div class="row">
+        <mat-card class="example-card" *ngFor="let producto of this.productos | paginate: { itemsPerPage: 12, currentPage: page }">
+          <mat-card-header>
+            <mat-card-title>{{ producto.nombre }}</mat-card-title>
+            <mat-card-subtitle>{{ producto.categoria.nombre}}</mat-card-subtitle>
+          </mat-card-header>
+          <img
+            mat-card-image
+            [src]="producto.imagenes[0].url"
+            alt="Photo of a Shiba Inu"
+          />
+          <mat-card-content>
+            <p>
+              <b>S/{{ producto.precio }}</b>
+            </p>
+            <p>
+              {{ producto.descripcion }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions class="d-flex">
+            <button routerLink="/principal/detalleProducto/{{producto.productoId}}" type="button" mat-raised-button color="warn">Ver Detalle</button>
+            <button (click)="addToCart(producto)" type="button" mat-raised-button color="accent">Añadir al carrito</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <pagination-controls
+      class="centrado"
+      (pageChange)="page = $event"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+    ></pagination-controls>
+  </div>
+</div>

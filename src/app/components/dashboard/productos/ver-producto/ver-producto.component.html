@@ -1,0 +1,15 @@
+<div *ngIf="producto != null" class="container-fluid" style="margin-top: 50px;">
+    <mat-card class="card">
+        <mat-card-title>{{ producto.nombre }}</mat-card-title>
+        <mat-card-content>
+            <p><strong>Nombre:</strong> {{producto.nombre}}</p>
+            <p><strong>Descripcion:</strong> {{producto.descripcion}}</p>
+            <p><strong>Precio:</strong> {{producto.precio}}</p>
+            <p><strong>Cantidad:</strong> {{producto.cantidad}}</p>
+            <p><strong>Categoria:</strong> {{producto.categoria.nombre}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button routerLink="/dashboard/productos" mat-raised-button>Volver</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

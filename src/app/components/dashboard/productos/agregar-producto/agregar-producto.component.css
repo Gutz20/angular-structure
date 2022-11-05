@@ -1,0 +1,49 @@
+.card {
+  margin-top: 10px;
+}
+
+.mat-form-field {
+  width: 100%;
+  margin: 5px;
+}
+
+.btnAceptar {
+  margin-right: 5px;
+}
+
+mat-grid-tile {
+  border: 1px solid #eee;
+}
+
+.btn-remove-image {
+  position: absolute;
+  cursor: pointer;
+  top: -6px;
+  right: -7px;
+}
+
+.dropzone {
+  height: 150px;
+  min-width: 100px;
+  display: table;
+  background-color: #eee;
+  width: 300px;
+  border: dashed 1px #aaa;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.centered {
+  text-align: center;
+}
+
+.browse-button {
+  color: blue;
+  cursor: pointer;
+}

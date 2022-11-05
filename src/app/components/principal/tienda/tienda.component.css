@@ -1,0 +1,35 @@
+.example-card {
+  max-width: 255px;
+  margin: 10px;
+}
+
+.example-header-image {
+  /* background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg"); */
+  background-size: cover;
+}
+
+/* .contenedor-cards{
+    display: flex;
+    flex-wrap: wrap;
+} */
+
+.contenedor-accordeon {
+    margin: 20px 0px;
+}
+
+/* mat-grid-tile {
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.shop-page-product-image {
+  max-width: 90%;
+  max-height: 90%;
+  margin-left: auto;
+  margin-right: auto;
+} */
+.centrado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,36 @@
+<!-- <a mat-list-item href="#">Link 1</a>
+<a mat-list-item href="#">Link 2</a>
+<a mat-list-item href="#">Link 3</a> -->
+
+<mat-action-list>
+  <div mat-subheader>Menu</div>
+  <button mat-list-item routerLink="/dashboard">
+    <mat-icon mat-list-icon fontIcon="home"></mat-icon> Inicio
+  </button>
+  <button mat-list-item routerLink="/dashboard/profile">
+    <mat-icon mat-list-icon fontIcon="account_circle"></mat-icon>Perfil
+  </button>
+  <button mat-list-item routerLink="/dashboard/categorias">
+    <mat-icon mat-list-icon fontIcon="list"></mat-icon>Categorias
+  </button>
+  <button mat-list-item routerLink="/dashboard/productos">
+    <mat-icon mat-list-icon fontIcon="view_list"></mat-icon>Productos
+  </button>
+  <button mat-list-item routerLink="/dashboard/usuarios">
+    <mat-icon mat-list-icon fontIcon="view_list"></mat-icon>Usuarios
+  </button>
+  <button mat-list-item routerLink="/dashboard/facturas">
+    <mat-icon mat-list-icon fontIcon="view_list"></mat-icon>Facturas
+  </button>
+  <button
+    *ngIf="isLoggedIn"
+    (click)="logout()"
+    mat-list-item
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    <mat-icon mat-list-icon fontIcon="logout"></mat-icon>Salir
+  </button>
+</mat-action-list>
+
+<!-- <mat-card></mat-card> -->

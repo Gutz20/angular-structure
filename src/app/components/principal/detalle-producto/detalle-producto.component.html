@@ -1,0 +1,55 @@
+<div class="container my-5">
+  <div class="row" *ngIf="this.producto">
+    <div class="col-6">
+      <div class="card image-container p-3">
+        <img
+          [src]="producto.imagenes[indiceProductoSeleccionado].url"
+          [alt]="producto.nombre"
+          class="producto-zoom-imagen"
+        />
+      </div>
+
+      <div class="mt-2">
+        <mat-grid-list cols="3" gutterSize="10" rowHeight="1:1">
+          <mat-grid-tile
+            *ngFor="let file of producto.imagenes; let i = index"
+            (click)="cambiarIndice(i)"
+            style="border: 1px solid lightgrey; cursor: pointer"
+          >
+            <img
+              [src]="file.url"
+              [alt]="producto.nombre"
+              height="100px"
+              width="100px"
+            />
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="informacion-producto">
+        <div class="mt-3">
+          <h2>{{ producto.nombre }}</h2>
+        </div>
+        <div class="mt-3">
+          Descripcion: <br />
+          {{ producto.descripcion }}
+        </div>
+        <div class="mt-3">
+          <b>S/ {{ producto.precio }}</b>
+        </div>
+        <div class="mt-5 text-center">
+          <button
+            (click)="addToCart(producto)"
+            mat-raised-button
+            color="warn"
+            style="width: 200px"
+          >
+            Añadir al carrito
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>

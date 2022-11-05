@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <mat-toolbar>
+    <span>{{ operacion }} Categoria</span>
+    <div class="example-spacer"></div>
+  </mat-toolbar>
+  <mat-card class="card" style="margin-top: 10px">
+    <mat-card-subtitle> Datos de la categoria </mat-card-subtitle>
+    <form [formGroup]="form" (ngSubmit)="agregarEditarCategoria()" class="form">
+      <div class="row">
+        <div class="col-12">
+          <mat-form-field class="ancho" appearance="fill">
+            <mat-label>Nombre de la categoria</mat-label>
+            <input matInput autocomplete="off" formControlName="nombre" />
+          </mat-form-field>
+          <mat-form-field class="ancho" appearance="fill">
+            <mat-label>Descripcion de la categoria</mat-label>
+            <textarea matInput placeholder="Ejemplo: esta categoria es de celulares" autocomplete="off" formControlName="descripcion"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-12 d-flex justify-content-center mt-5">
+          <button mat-raised-button routerLink="/dashboard/categorias"  style="margin-right: 20px; width: 15%;">
+            Volver
+          </button>
+          <button
+            type="submit"
+            [disabled]="form.invalid"
+            mat-raised-button
+            color="primary"
+            style="margin-right: 20px; width: 15%;"
+          >
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+</div>
