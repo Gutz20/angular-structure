@@ -1,7 +1,3 @@
-<!-- <a mat-list-item href="#">Link 1</a>
-<a mat-list-item href="#">Link 2</a>
-<a mat-list-item href="#">Link 3</a> -->
-
 <mat-action-list>
   <div mat-subheader>Menu</div>
   <button mat-list-item routerLink="/dashboard">
@@ -11,16 +7,19 @@
     <mat-icon mat-list-icon fontIcon="account_circle"></mat-icon>Perfil
   </button>
   <button mat-list-item routerLink="/dashboard/categorias">
-    <mat-icon mat-list-icon fontIcon="list"></mat-icon>Categorias
+    <mat-icon mat-list-icon fontIcon="sell"></mat-icon>Categorias
   </button>
   <button mat-list-item routerLink="/dashboard/productos">
-    <mat-icon mat-list-icon fontIcon="view_list"></mat-icon>Productos
+    <mat-icon mat-list-icon fontIcon="list_alt"></mat-icon>Productos
+  </button>
+  <button mat-list-item routerLink="/dashboard/clientes">
+    <mat-icon mat-list-icon fontIcon="group"></mat-icon>Clientes
   </button>
   <button mat-list-item routerLink="/dashboard/usuarios">
-    <mat-icon mat-list-icon fontIcon="view_list"></mat-icon>Usuarios
+    <mat-icon mat-list-icon fontIcon="person_filled"></mat-icon>Usuarios
   </button>
   <button mat-list-item routerLink="/dashboard/facturas">
-    <mat-icon mat-list-icon fontIcon="view_list"></mat-icon>Facturas
+    <mat-icon mat-list-icon fontIcon="payments"></mat-icon>Facturas
   </button>
   <button
     *ngIf="isLoggedIn"

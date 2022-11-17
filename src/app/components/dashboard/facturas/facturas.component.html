@@ -5,6 +5,24 @@
     <button
       mat-raised-button
       color="primary"
+      class="me-2"
+      (click)="generarPDF()"
+    >
+      <mat-icon mat-list-icon>picture_as_pdf</mat-icon>
+      Generar PDF
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="me-2"
+      (click)="generarExcel()"
+    >
+      <mat-icon mat-list-icon>description</mat-icon>
+      Generar EXCEL
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
       [routerLink]="['/dashboard/crearFactura']"
     >
       <mat-icon mat-list-icon>add_circle_outline</mat-icon>
@@ -18,7 +36,7 @@
       <input
         matInput
         (keyup)="applyFilter($event)"
-        placeholder="Ejemplo. Pedro"
+        placeholder="Ejemplo. Factura..."
         #input
         autocomplete="off"
       />
@@ -38,7 +56,7 @@
         <ng-container matColumnDef="fecha">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
           <td mat-cell *matCellDef="let element">
-            {{ element.fechaCreacion }}
+            {{ element.fechaCreacion | date: 'dd/MM/yyyy HH:MM:SS' }}
           </td>
         </ng-container>
 
@@ -52,13 +70,27 @@
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let element">
-            <mat-icon
-              routerLink="/dashboard/verFactura/{{ element.id }}"
-              style="cursor: pointer"
-              matTooltip="Ver detalle"
-              fontIcon="search"
-              >Ver detalles</mat-icon
+            <button mat-icon-button disabled aria-label="Example icon-button with a heart icon">
+              <mat-icon
+                routerLink="/dashboard/verFactura/{{ element.id }}"
+                style="cursor: pointer"
+                matTooltip="Ver detalle"
+                fontIcon="search"
+                >Ver detalles</mat-icon
+              >
+            </button>
+
+            <button
+              color="primary"
+              mat-raised-button
+              [matMenuTriggerFor]="beforeMenu"
             >
+            <mat-icon mat-list-icon>description</mat-icon> Generar reporte
+            </button>
+            <mat-menu #beforeMenu="matMenu" xPosition="before">
+              <button mat-menu-item (click)="generarPDFDeFactura(element.id)"> PDF</button>
+              <button mat-menu-item (click)="generarExcelDeFactura(element.id)">EXCEL</button>
+            </mat-menu>
           </td>
         </ng-container>
 

@@ -1,80 +1,118 @@
 <div class="container-fluid">
-    <mat-toolbar>
-      <span>Productos</span>
-      <div class="example-spacer"></div>
-      <button
-        mat-raised-button
-        color="primary"
-        [routerLink]="['/dashboard/addProducto']"
+  <mat-toolbar>
+    <span>Productos</span>
+    <div class="example-spacer"></div>
+    <button
+      mat-raised-button
+      color="primary"
+      class="me-2"
+      (click)="generarPDF()"
+    >
+      <mat-icon mat-list-icon>picture_as_pdf</mat-icon>
+      Generar PDF
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="me-2"
+      (click)="generarExcel()"
+    >
+      <mat-icon mat-list-icon>description</mat-icon>
+      Generar EXCEL
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/dashboard/addProducto']"
+    >
+      AGREGAR
+    </button>
+  </mat-toolbar>
+
+  <div>
+    <mat-form-field appearance="standard">
+      <mat-label>Filtro</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Ejemplo. Pedro"
+        #input
+        autocomplete="off"
+      />
+    </mat-form-field>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+          <td mat-cell *matCellDef="let element">{{ element.productoId }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+          <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripcion</th>
+          <td mat-cell *matCellDef="let element">{{ element.descripcion }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="precio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+          <td mat-cell *matCellDef="let element">S/{{ element.precio }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidad">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</th>
+          <td mat-cell *matCellDef="let element">{{ element.cantidad }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="categoria">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoria</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.categoria.nombre }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon
+              (click)="mostrarImagenes(element)"
+              matTooltip="Ver Imagenes"
+              class="edit"
+              fontIcon="image"
+            ></mat-icon>
+            <mat-icon
+              routerLink="/dashboard/verProducto/{{ element.productoId }}"
+              matTooltip="Ver Detalle"
+              class="search"
+              fontIcon="search"
+            ></mat-icon>
+            <mat-icon
+              routerLink="/dashboard/editarProducto/{{ element.productoId }}"
+              matTooltip="Editar"
+              class="edit"
+              fontIcon="edit"
+            ></mat-icon>
+            <mat-icon
+              (click)="eliminarProducto(element.productoId)"
+              matTooltip="Eliminar"
+              class="delete"
+              fontIcon="delete"
+            ></mat-icon>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator
+        [pageSizeOptions]="[10, 25, 100]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements"
       >
-        AGREGAR
-      </button>
-    </mat-toolbar>
-  
-    <div>
-      <mat-form-field appearance="standard">
-          <mat-label>Filtro</mat-label>
-          <input
-            matInput
-            (keyup)="applyFilter($event)"
-            placeholder="Ejemplo. Pedro"
-            #input
-            autocomplete="off"
-          />
-        </mat-form-field>
-      <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort>
-          
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.productoId }}</td>
-          </ng-container>
-  
-          <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
-            <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="descripcion">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripcion</th>
-            <td mat-cell *matCellDef="let element">{{ element.descripcion }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="precio">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
-            <td mat-cell *matCellDef="let element">{{ element.precio }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="cantidad">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</th>
-            <td mat-cell *matCellDef="let element">{{ element.cantidad }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="categoria">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoria</th>
-            <td mat-cell *matCellDef="let element">{{ element.categoria.nombre }}</td>
-          </ng-container>
-        
-          <ng-container matColumnDef="acciones">
-              <th mat-header-cell *matHeaderCellDef>Acciones</th>
-              <td mat-cell *matCellDef="let element">
-                  <mat-icon (click)="mostrarImagenes(element)" matTooltip="Ver Imagenes" class="edit" fontIcon="image"></mat-icon>
-                  <mat-icon routerLink="/dashboard/verProducto/{{element.productoId}}" matTooltip="Ver Detalle" class="search" fontIcon="search"></mat-icon>
-                  <mat-icon routerLink="/dashboard/editarProducto/{{element.productoId}}"  matTooltip="Editar" class="edit" fontIcon="edit"></mat-icon>
-                  <mat-icon (click)="eliminarProducto(element.productoId)" matTooltip="Eliminar" class="delete" fontIcon="delete"></mat-icon>
-              </td>
-          </ng-container>
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-        <mat-paginator
-          [pageSizeOptions]="[10, 25, 100]"
-          showFirstLastButtons
-          aria-label="Select page of periodic elements"
-        >
-        </mat-paginator>
-      </div>
+      </mat-paginator>
     </div>
   </div>
-  
+</div>

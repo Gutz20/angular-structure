@@ -16,12 +16,20 @@ export class UsuarioService {
     return this.httpClient.post(`${this.myAppUrl}${this.myApiUrl}/`, user);
   }
 
+  addUserAdmin(user: any) {
+    return this.httpClient.post(`${this.myAppUrl}${this.myApiUrl}`, user);
+  }
+
   getUsuario(id: number) {
     return this.httpClient.get(`${this.myAppUrl}${this.myApiUrl}/id/${id}`);
   }
 
   getUsuarios() {
     return this.httpClient.get(`${this.myAppUrl}${this.myApiUrl}`);
+  }
+
+  getUsuariosByRol(nombreRol: string) {
+    return this.httpClient.get(`${this.myAppUrl}${this.myApiUrl}/rol/${nombreRol}`);
   }
 
   deleteUsuario(id: number) {

@@ -1,8 +1,10 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ReportesService } from 'src/app/services/reportes.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/interfaces/usuario';
 
@@ -18,7 +20,7 @@ export class UsuariosComponent implements OnInit {
     'nombres',
     'email',
     'sexo',
-    'acciones'
+    'acciones',
   ];
   dataSource = new MatTableDataSource<any>();
 
@@ -27,7 +29,8 @@ export class UsuariosComponent implements OnInit {
 
   constructor(
     private _usuarioService: UsuarioService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private reporteService: ReportesService
   ) {}
 
   ngOnInit(): void {
@@ -49,16 +52,19 @@ export class UsuariosComponent implements OnInit {
   }
 
   obtenerUsuarios() {
-    this._usuarioService.getUsuarios().subscribe((usuario: any) => {
-      this.dataSource.data = usuario.content;
-    })
+    const rol = 'ADMIN';
+    this._usuarioService.getUsuariosByRol(rol).subscribe({
+      next: (data: any) => {
+        this.dataSource.data = data;
+      },
+    });
   }
 
   eliminarUsuario(usuarioId: number) {
     this._usuarioService.deleteUsuario(usuarioId).subscribe(() => {
-      this.mensajeDeExito("eliminado");
+      this.mensajeDeExito('eliminado');
       this.obtenerUsuarios();
-    })
+    });
   }
   mensajeDeExito(texto: string) {
     this._snackBar.open(`El usuario fue ${texto} con exito`, '', {
@@ -67,4 +73,46 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  generarPDF() {
+    let date: Date = new Date();
+    let formateado = formatDate(date, 'dd-MM-yyyy', 'en-ES');
+    const archivo = 'Administradores';
+    const tipo = 'PDF';
+
+    this.reporteService.generarReporte(archivo, tipo).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        let blob: Blob = data.body as Blob;
+        let a = document.createElement('a');
+        //a.download = fileName;
+        a.download = 'Reporte ' + archivo + '-' + formateado;
+        a.href = window.URL.createObjectURL(blob);
+        a.click();
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
+  }
+
+  generarExcel() {
+    let date: Date = new Date();
+    let formateado = formatDate(date, 'dd-MM-yyyy', 'en-ES');
+    const archivo = 'Administradores';
+    const tipo = 'EXCEL';
+
+    this.reporteService.generarReporte(archivo, tipo).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        let blob: Blob = data.body as Blob;
+        let a = document.createElement('a');
+        a.download = 'Reporte ' + archivo + '-' + formateado;
+        a.href = window.URL.createObjectURL(blob);
+        a.click();
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
+  }
 }

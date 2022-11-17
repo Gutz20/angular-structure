@@ -6,7 +6,6 @@ import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './dashboard.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { ReportesComponent } from './reportes/reportes.component';
 import { AgregarEditarUsuarioComponent } from './usuarios/agregar-editar-usuario/agregar-editar-usuario.component';
 import { CategoriasComponent } from './categorias/categorias.component';
 import { AgregarEditarCategoriaComponent } from './categorias/agregar-editar-categoria/agregar-editar-categoria.component';
@@ -27,6 +26,9 @@ import { DragDirective } from './productos/drag.directive';
 import { MostrarImagenesDeProductoComponent } from './productos/mostrar-imagenes-de-producto/mostrar-imagenes-de-producto.component';
 import { FacturasComponent } from './facturas/facturas.component';
 import { VerFacturaComponent } from './facturas/ver-factura/ver-factura.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { AgregarEditarClienteComponent } from './clientes/agregar-editar-cliente/agregar-editar-cliente.component';
+import { VerClienteComponent } from './clientes/ver-cliente/ver-cliente.component';
 
 
 @NgModule({
@@ -34,7 +36,6 @@ import { VerFacturaComponent } from './facturas/ver-factura/ver-factura.componen
     DashboardComponent,
     InicioComponent,
     UsuariosComponent,
-    ReportesComponent,
     AgregarEditarUsuarioComponent,
     AgregarEditarUsuarioComponent,
     CategoriasComponent,
@@ -50,6 +51,9 @@ import { VerFacturaComponent } from './facturas/ver-factura/ver-factura.componen
     MostrarImagenesDeProductoComponent,
     FacturasComponent,
     VerFacturaComponent,
+    ClientesComponent,
+    AgregarEditarClienteComponent,
+    VerClienteComponent,
   ],
   imports: [
     CommonModule,

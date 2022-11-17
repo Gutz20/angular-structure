@@ -1,57 +1,43 @@
-import { ReportesService } from './../../../services/reportes.service';
 import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { Producto } from 'src/app/model/producto.model';
-import { ImageProcessingService } from 'src/app/services/image-processing.service';
-import { ProductoService } from 'src/app/services/producto.service';
-import { MostrarImagenesDeProductoComponent } from './mostrar-imagenes-de-producto/mostrar-imagenes-de-producto.component';
+import { ReportesService } from 'src/app/services/reportes.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
-  selector: 'app-productos',
-  templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.css'],
+  selector: 'app-clientes',
+  templateUrl: './clientes.component.html',
+  styleUrls: ['./clientes.component.css'],
 })
-export class ProductosComponent implements OnInit {
+export class ClientesComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
-    'nombre',
-    'descripcion',
-    'precio',
-    'cantidad',
-    'categoria',
+    'usuario',
+    'nombres',
+    'email',
+    'telefono',
     'acciones',
   ];
   dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
   constructor(
-    private _productoService: ProductoService,
+    private _usuarioService: UsuarioService,
     private _snackBar: MatSnackBar,
-    public dialog: MatDialog,
-    private imageProcessingService: ImageProcessingService,
-    private reporteService: ReportesService,
-    private router: Router
+    private reporteService: ReportesService
   ) {}
 
   ngOnInit(): void {
-    this.obtenerProductos();
+    this.obtenerClientes();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    if (this.dataSource.data.length > 0) {
-      this.paginator._intl.itemsPerPageLabel = 'Items por pagina';
-    }
   }
 
   applyFilter(event: Event) {
@@ -63,46 +49,32 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-  obtenerProductos() {
-    this._productoService
-      .getProductos()
-      .pipe(
-        map((x: Producto[], i) => x.map((producto: Producto) => this.imageProcessingService.crearImagenes(producto)))
-      )
-      .subscribe((producto: any) => {
-        this.dataSource.data = producto;
-      });
-  }
-
-  eliminarProducto(productoId: number) {
-    this._productoService.deleteProducto(productoId).subscribe(() => {
-      this.mensajeDeExito('eliminado');
-      this.obtenerProductos();
+  obtenerClientes() {
+    const rol = 'NORMAL';
+    this._usuarioService.getUsuariosByRol(rol).subscribe({
+      next: (data: any) => {
+        this.dataSource.data = data;
+      },
     });
   }
 
+  eliminarUsuario(usuarioId: number) {
+    this._usuarioService.deleteUsuario(usuarioId).subscribe(() => {
+      this.mensajeDeExito('eliminado');
+      this.obtenerClientes();
+    });
+  }
   mensajeDeExito(texto: string) {
-    this._snackBar.open(`El producto fue ${texto} con exito`, '', {
+    this._snackBar.open(`El usuario fue ${texto} con exito`, '', {
       duration: 4000,
       horizontalPosition: 'right',
-    });
-  }
-
-  mostrarImagenes(producto: Producto) {
-    console.log(producto);
-    this.dialog.open(MostrarImagenesDeProductoComponent, {
-      data: {
-        imagenes: producto.imagenes
-      },
-      height: '500px',
-      width: '800px',
     });
   }
 
   generarPDF() {
     let date: Date = new Date();
     let formateado = formatDate(date, 'dd-MM-yyyy', 'en-ES');
-    const archivo = 'Productos';
+    const archivo = 'Clientes';
     const tipo = 'PDF';
 
     this.reporteService.generarReporte(archivo, tipo).subscribe({
@@ -111,7 +83,7 @@ export class ProductosComponent implements OnInit {
         let blob: Blob = data.body as Blob;
         let a = document.createElement('a');
         //a.download = fileName;
-        a.download = "Reporte " + archivo + '-' + formateado;
+        a.download = 'Reporte ' + archivo + '-' + formateado;
         a.href = window.URL.createObjectURL(blob);
         a.click();
       },
@@ -124,7 +96,7 @@ export class ProductosComponent implements OnInit {
   generarExcel() {
     let date: Date = new Date();
     let formateado = formatDate(date, 'dd-MM-yyyy', 'en-ES');
-    const archivo = 'Productos';
+    const archivo = 'Clientes';
     const tipo = 'EXCEL';
 
     this.reporteService.generarReporte(archivo, tipo).subscribe({
@@ -132,7 +104,7 @@ export class ProductosComponent implements OnInit {
         console.log(data);
         let blob: Blob = data.body as Blob;
         let a = document.createElement('a');
-        a.download = "Reporte " + archivo + '-' + formateado;
+        a.download = 'Reporte ' + archivo + '-' + formateado;
         a.href = window.URL.createObjectURL(blob);
         a.click();
       },
@@ -141,5 +113,4 @@ export class ProductosComponent implements OnInit {
       },
     });
   }
-
 }

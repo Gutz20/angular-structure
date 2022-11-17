@@ -1,0 +1,18 @@
+<div *ngIf="usuario != null" class="container-fluid" style="margin-top: 50px">
+  <mat-card class="card">
+    <mat-card-title>{{ usuario.nombres }}</mat-card-title>
+    <mat-card-content>
+      <p><strong>ID:</strong> {{ usuario.id }}</p>
+      <p><strong>Usuario:</strong> {{ usuario.username }}</p>
+      <p>
+        <strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellido }}
+      </p>
+      <p><strong>Email:</strong> {{ usuario.email }}</p>
+      <p><strong>Telefono:</strong> {{ usuario.telefono }}</p>
+      <p><strong>Password:</strong> {{ usuario.password }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button routerLink="/dashboard/clientes" mat-raised-button>Volver</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

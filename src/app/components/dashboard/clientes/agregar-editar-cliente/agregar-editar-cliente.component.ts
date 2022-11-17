@@ -3,14 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { Usuario } from 'src/interfaces/usuario';
 
 @Component({
-  selector: 'app-agregar-editar-usuario',
-  templateUrl: './agregar-editar-usuario.component.html',
-  styleUrls: ['./agregar-editar-usuario.component.css'],
+  selector: 'app-agregar-editar-cliente',
+  templateUrl: './agregar-editar-cliente.component.html',
+  styleUrls: ['./agregar-editar-cliente.component.css'],
 })
-export class AgregarEditarUsuarioComponent implements OnInit {
+export class AgregarEditarClienteComponent implements OnInit {
   form: FormGroup;
   id: number;
 
@@ -75,15 +74,15 @@ export class AgregarEditarUsuarioComponent implements OnInit {
   editarUsuario(id: number, usuario: any) {
     this._usuarioService.updateUsuario(id, usuario).subscribe(() => {
       this.mensajeDeExito('editado');
-      this.router.navigate(['/dashboard/usuarios'])
+      this.router.navigate(['/dashboard/clientes']);
     });
   }
 
   agregarUsuario(usuario: any) {
-    this._usuarioService.addUserAdmin(usuario).subscribe((data: any) => {
-      this.mensajeDeExito("registrado")
-      this.router.navigate(['/dashboard/usuarios'])
-    })
+    this._usuarioService.añadirUsuario(usuario).subscribe((data: any) => {
+      this.mensajeDeExito('registrado');
+      this.router.navigate(['/dashboard/clientes']);
+    });
   }
 
   mensajeDeExito(texto: string) {
