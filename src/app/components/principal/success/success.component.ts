@@ -12,13 +12,17 @@ import { ProductoService } from 'src/app/services/producto.service';
 export class SuccessComponent implements OnInit {
   constructor(
     private router: Router,
-    private productoService: ProductoService,
-  ) {}
+    private productoService: ProductoService
+  ) {
+    
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.productoService.clearProducts();
+    
+  }
 
   goBackToHome() {
-    this.productoService.clearProducts();
     this.router.navigate(['/principal']);
   }
 }

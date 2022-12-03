@@ -21,13 +21,24 @@ export class ReportesService {
     );
   }
 
+  generarReporteDeVentas(archivo: string, tipo: string, subReporte: string) {
+    return this.http.get(
+      `${this.myAppUrl}${this.myApiUrl}/download/${archivo}`,
+      { observe: 'response', responseType: 'blob', params: { tipo: tipo, DIR_SUBREPORT: subReporte} }
+    );
+  }
+
   generarReporteFactura(archivo: string, tipo: string, id: number) {
     return this.http.get(
       `${this.myAppUrl}${this.myApiUrl}/download/${archivo}`,
-      { observe: 'response', responseType: 'blob', params: { 
-        ID: id,
-        tipo: tipo
-      } }
+      {
+        observe: 'response',
+        responseType: 'blob',
+        params: {
+          ID: id,
+          tipo: tipo,
+        },
+      }
     );
   }
 }

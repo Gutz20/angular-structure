@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { Factura } from 'src/app/model/factura.model';
 import { ItemFactura } from 'src/app/model/itemFactura.model';
+import { Mail } from 'src/app/model/mail.model';
 import { FacturaService } from 'src/app/services/factura.service';
+import { MailService } from 'src/app/services/mail.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -13,6 +15,13 @@ import { environment } from 'src/environments/environment';
 })
 export class PaymentComponent implements OnInit {
   public payPalConfig?: IPayPalConfig;
+  idFactura!: number;
+  persona: Mail = {
+    correo: '',
+    asunto: '',
+    contenido: '',
+    listAttachment: [],
+  };
   showSuccess!: any;
   totalCarrito!: any;
   datosPago: any;
@@ -36,7 +45,11 @@ export class PaymentComponent implements OnInit {
     ],
   };
 
-  constructor(private router: Router, private facturaService: FacturaService) {}
+  constructor(
+    private router: Router,
+    private facturaService: FacturaService,
+    private mailService: MailService
+  ) {}
 
   ngOnInit() {
     this.initConfig();
@@ -106,6 +119,7 @@ export class PaymentComponent implements OnInit {
           this.datosPago = data;
           localStorage.setItem('pago', JSON.stringify(this.datosPago));
           this.crearFactura();
+          this.enviarCorreo();
           this.router.navigate(['/principal/success']);
           // this.facturaService.crearFactura()
         }
@@ -134,20 +148,45 @@ export class PaymentComponent implements OnInit {
         cantidad: this.productos[i].cantidad,
         precio: this.productos[i].precio,
         producto: {
-          productoId: this.productos[i].productoId
-        }
-      }
+          productoId: this.productos[i].productoId,
+        },
+      };
       this.itemsFacturas.push(this.itemFactura);
     }
-      
+
     this.factura.observacion = 'prueba';
     this.factura.usuario.id = this.usuario.id;
-    this.factura.itemFacturas = this.itemsFacturas
+    this.factura.itemFacturas = this.itemsFacturas;
 
     this.facturaService.crearFactura(this.factura).subscribe({
+      next: (data: any) => {},
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
+  }
+
+  enviarCorreo() {
+    const usuario = JSON.parse(localStorage.getItem('user') as any) || [];
+    this.persona.asunto = 'Factura de compra';
+    this.persona.correo = usuario.email;
+    this.persona.contenido = 'Zzootec le agradece su preferencia 😏';
+    this.persona.listAttachment.push('Factura');
+
+    let lastId = 0;
+    this.facturaService.getLastIdFactura().subscribe({
       next: (data: any) => {
-        console.log(data);
-      }
-    })
+        lastId = data;
+        this.mailService
+          .sendMailFactura(this.persona, 'PDF', lastId)
+          .subscribe({
+            next: (data: any) => {},
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {},
+          });
+      },
+    });
   }
 }

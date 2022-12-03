@@ -71,8 +71,6 @@ export class CategoriasComponent implements OnInit {
     let formateado = formatDate(date, 'dd-MM-yyyy', 'en-ES');
     const archivo = 'Categorias';
     const tipo = 'PDF';
-
-
     this.reporteService.generarReporte(archivo, tipo).subscribe({
       next: (data: any) => {
         console.log(data);
@@ -80,7 +78,7 @@ export class CategoriasComponent implements OnInit {
         let blob: Blob = data.body as Blob;
         let a = document.createElement('a');
         //a.download = fileName;
-        a.download = "Reporte " + archivo + ' - ' + formateado;
+        a.download = 'Reporte ' + archivo + ' - ' + formateado;
         a.href = window.URL.createObjectURL(blob);
         a.click();
       },
@@ -102,7 +100,7 @@ export class CategoriasComponent implements OnInit {
         let blob: Blob = data.body as Blob;
         let a = document.createElement('a');
         //a.download = fileName;
-        a.download = "Reporte " + archivo + ' - ' + formateado;
+        a.download = 'Reporte ' + archivo + ' - ' + formateado;
         a.href = window.URL.createObjectURL(blob);
         a.click();
       },

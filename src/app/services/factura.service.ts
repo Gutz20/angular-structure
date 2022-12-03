@@ -27,6 +27,9 @@ export class FacturaService {
   getFacturaByIdUser(idUser: number) {
     return this.http.get(`${this.myAppUrl}${this.myApiUrl}/usuario/${idUser}`);
   }
-  
+
+  getLastIdFactura() {
+    return this.http.get(`${this.myAppUrl}${this.myApiUrl}/ultimoId`);
+  }
 
 }

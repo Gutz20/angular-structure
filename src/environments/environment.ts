@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  Client_ID: 'AQATl09ig99nDalOlw-KM85tLNPYbmIv-tTUiYVEGvgA9o0MHfzAo102qwehdbWcXUTFG1a3AoohoN8X',
+  Client_ID: 'AXUe-98Z28mgn3yB2G22VZMol32wr3jx3yxPpa6Tr1ZF4VzrLVudOzLgellP8sppICtHllcvYX2WH0li',
   endpoint: 'http://localhost:8080/'
 };
 

@@ -51,23 +51,24 @@ export class FacturasComponent implements OnInit {
     this.facturaService.getFacturas().subscribe({
       next: (data: any) => {
         this.dataSource.data = data;
+        console.log(data);
       },
+      
     });
   }
 
   generarPDF() {
     let date: Date = new Date();
     let formateado = formatDate(date, 'dd-MM-yyyy', 'en-ES');
-    const archivo = 'Ventas';
+    const archivo = 'Facturas_Ventas';
     const tipo = 'PDF';
+    const subReporte = 'sub_facturas_empresa';
 
-    this.reporteService.generarReporte(archivo, tipo).subscribe({
+    this.reporteService.generarReporteDeVentas(archivo, tipo, subReporte).subscribe({
       next: (data: any) => {
         console.log(data);
-        //let fileName = data.headers.get('content-disposition')?.split(';')[1].split('=')[1]; // Obtiene el nombre del archivo de la API pero no estamos enviandolo
         let blob: Blob = data.body as Blob;
         let a = document.createElement('a');
-        //a.download = fileName;
         a.download = 'Reporte ' + archivo + ' - ' + formateado;
         a.href = window.URL.createObjectURL(blob);
         a.click();
@@ -81,15 +82,15 @@ export class FacturasComponent implements OnInit {
   generarExcel() {
     let date: Date = new Date();
     let formateado = formatDate(date, 'dd-MM-yyyy', 'en-ES');
-    const archivo = 'Ventas';
+    const archivo = 'Facturas_Ventas';
     const tipo = 'EXCEL';
-    this.reporteService.generarReporte(archivo, tipo).subscribe({
+    const subReporte = 'sub_facturas_empresa';
+
+    this.reporteService.generarReporteDeVentas(archivo, tipo, subReporte).subscribe({
       next: (data: any) => {
         console.log(data);
-        //let fileName = data.headers.get('content-disposition')?.split(';')[1].split('=')[1]; // Obtiene el nombre del archivo de la API pero no estamos enviandolo
         let blob: Blob = data.body as Blob;
         let a = document.createElement('a');
-        //a.download = fileName;
         a.download = 'Reporte ' + archivo + ' - ' + formateado;
         a.href = window.URL.createObjectURL(blob);
         a.click();
